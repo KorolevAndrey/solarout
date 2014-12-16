@@ -7,9 +7,9 @@ public class Velocity {
 
     private Vector3 vector;
 
-    private double scalar;
+    private float scalar;
 
-    public Velocity(Vector3 vector, double scalar) {
+    public Velocity(Vector3 vector, float scalar) {
         this.vector = vector;
         this.scalar = scalar;
     }
@@ -22,11 +22,11 @@ public class Velocity {
         this.vector = vector;
     }
 
-    public double getScalar() {
+    public float getScalar() {
         return scalar;
     }
 
-    public void setScalar(double scalar) {
+    public void setScalar(float scalar) {
         this.scalar = scalar;
     }
 }

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 abstract public class SphericObject extends MaterialPoint {
 
     private float radius;
-    private double mass;
+    private float mass;
     private Velocity velocity;
 
 
@@ -16,7 +16,7 @@ abstract public class SphericObject extends MaterialPoint {
      * @param position initial position of Object
      * @param velocity velocity of Object
      */
-    public SphericObject(Vector3 position, float radius, double mass, Velocity velocity) {
+    public SphericObject(Vector3 position, float radius, float mass, Velocity velocity) {
         super(position);
 
         this.radius = radius;
@@ -24,7 +24,7 @@ abstract public class SphericObject extends MaterialPoint {
         this.velocity = velocity;
     }
 
-    public SphericObject(Vector3 position, float radius, double mass, Velocity velocity, String name) {
+    public SphericObject(Vector3 position, float radius, float mass, Velocity velocity, String name) {
         super(position, name);
 
         this.radius = radius;
@@ -44,7 +44,7 @@ abstract public class SphericObject extends MaterialPoint {
     }
 
 
-    public double getRadius() {
+    public float getRadius() {
         return radius;
     }
 
@@ -52,11 +52,11 @@ abstract public class SphericObject extends MaterialPoint {
         this.radius = radius;
     }
 
-    public double getMass() {
+    public float getMass() {
         return mass;
     }
 
-    public void setMass(double mass) {
+    public void setMass(float mass) {
         this.mass = mass;
     }
 

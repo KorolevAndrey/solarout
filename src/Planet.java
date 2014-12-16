@@ -5,11 +5,11 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Planet extends SphericObject{
 
-    public Planet(float radius, double mass, Velocity velocity) {
+    public Planet(float radius, float mass, Velocity velocity) {
         super(new Vector3(0, 0, 0), radius, mass, velocity);
     }
 
-    public Planet(float radius, double mass, Velocity velocity, String name) {
+    public Planet(float radius, float mass, Velocity velocity, String name) {
         super(new Vector3(0, 0, 0), radius, mass, velocity, name);
     }
 

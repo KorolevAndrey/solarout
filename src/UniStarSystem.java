@@ -74,7 +74,7 @@ public class UniStarSystem {
 
         switch(relativeObject) {
             case RELATIVE_TO_STAR:
-                double awayFromStarCenter = position.len();
+                float awayFromStarCenter = position.len();
                 if(awayFromStarCenter <= star.getRadius()) {
                     throw new InvalidParameterException("Your planet position is partly inside your star, it should be at least little bit away :)");
                 }
