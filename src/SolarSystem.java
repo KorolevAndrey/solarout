@@ -8,7 +8,7 @@ public class SolarSystem extends UniStarSystem {
      * @param radius radius of system in meters
      * @param star
      */
-    public SolarSystem(double radius, Star star) {
+    public SolarSystem(float radius, Star star) {
         super(radius, star);
     }
 }
