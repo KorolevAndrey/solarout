@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector3;
  * Created by aram on 12/15/2014.
  */
 
-public class Star extends SphericObject {
+public class Star extends SphericStellarBody {
 
     public Star(float radius, float mass) {
         super(new Vector3(0, 0, 0), radius, mass, new Velocity(new Vector3(0, 0, 0), 0));
