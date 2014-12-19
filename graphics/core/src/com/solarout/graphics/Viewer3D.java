@@ -116,7 +116,7 @@ public class Viewer3D {
 
     private void pointCameraTo(SphericStellarBody body) {
         Vector3 vec = new Vector3(body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
-        cam.position.set(vec.x, vec.y, vec.z);
+        cam.position.set(vec.x, vec.y+10, vec.z+10);
         cam.lookAt(vec.x, vec.y, vec.z);
         cam.update();
     }
