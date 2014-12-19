@@ -33,9 +33,8 @@ public class SolarStage extends Stage {
         float solarRadius = (float) (2 * (Math.pow(10, 8)));
 
         solarSystem = new UniStarSystem(solarRadius, star, 100F);
-        Planet planetData = new Planet((float) (6.7F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20)));
         solarSystem.addStellarBody(
-               planetData,
+                new Planet((float) (6.7F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20))),
                 new Vector3((float) (1.49F * Math.pow(10, 7)), 0, 0),
                 new Velocity(new Vector3(0, 1, 0.01F), (float) (3.5F * Math.pow(10, 1))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
 
@@ -53,6 +52,7 @@ public class SolarStage extends Stage {
 
 
         PlanetActor planetStar = new PlanetActor(70);
+        planetStar.setColor(Color.YELLOW);
         planetStar.setX(star.getPosition().x/meterPerPixel);
         planetStar.setY(star.getPosition().y/meterPerPixel);
         planets.put("star", planetStar);
@@ -82,7 +82,7 @@ public class SolarStage extends Stage {
         }
 
         try {
-            for(int i = 0; i < 1000; i++) {
+            for(int i = 0; i < 500; i++) {
                 solarSystem.tick();
             }
         } catch (Exception e) {
