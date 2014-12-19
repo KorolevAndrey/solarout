@@ -83,10 +83,10 @@ public class Viewer3D {
                 new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
                 new Velocity(new Vector3(0, 1, 0.F), (float) (4.5F * Math.pow(10, 2))), star);
 
-        solarSystem.addStellarBody(
-                new Planet((float) (0.8F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 15))),
-                new Vector3(0, 0, (float) (1.49F * Math.pow(10, 9))),
-                new Velocity(new Vector3(0, 0, 1F), (float) (4.5F * Math.pow(10, 2))), earth);
+//        solarSystem.addStellarBody(
+//                new Planet((float) (0.8F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 15))),
+//                new Vector3(0, 0, (float) (1.49F * Math.pow(10, 9))),
+//                new Velocity(new Vector3(0, 0, 1F), (float) (4.5F * Math.pow(10, 2))), earth);
 
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
@@ -169,8 +169,8 @@ public class Viewer3D {
             setCoordinateToObject(solarBody, planets.get(bodyName));
         }
 
-       // if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-        if(true) {
+       if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+//        if(true) {
             try {
                 for (int i = 0; i < 2000; i++) {
                     solarSystem.tick();
