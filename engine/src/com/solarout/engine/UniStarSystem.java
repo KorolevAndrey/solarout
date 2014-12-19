@@ -148,7 +148,7 @@ public class UniStarSystem {
 
         accelerationVelocityScalar = (float) (this.G * this.star.getMass() / Math.pow(affectedStellarBody.getPosition().dst(star.getPosition()), 2));
         dir.set(star.getPosition()).sub(affectedStellarBody.getPosition()).nor();
-        accelerationVelocityDirection = new Vector3(dir).scale(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
+        accelerationVelocityDirection = new Vector3(dir).scl(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
 
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
@@ -162,7 +162,7 @@ public class UniStarSystem {
             accelerationVelocityScalar = (float) (this.G * affectingStellarBody.getMass() / Math.pow(affectedStellarBody.getPosition().dst(affectingStellarBody.getPosition()), 2));
             dir.set(affectingStellarBody.getPosition()).sub(affectedStellarBody.getPosition()).nor();
 
-            Vector3 tmp = new Vector3(dir).scale(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
+            Vector3 tmp = new Vector3(dir).scl(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
             accelerationVelocityDirection.dot(tmp);
         }
 
