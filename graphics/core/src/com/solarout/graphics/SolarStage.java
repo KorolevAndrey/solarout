@@ -24,7 +24,7 @@ public class SolarStage extends Stage {
 
     private HashMap<String, PlanetActor> planets = new HashMap<String, PlanetActor>();
 
-    private float meterPerPixel = 1000000000;
+    private float meterPerPixel = 1000000;
 
     public SolarStage() {
         super();
@@ -32,7 +32,7 @@ public class SolarStage extends Stage {
         Star star = new Star((float) (6.955F * Math.pow(10, 4)), (float) (1.98855F * Math.pow(10, 26)));
         float solarRadius = (float) (2 * (Math.pow(10, 8)));
 
-        solarSystem = new UniStarSystem(solarRadius, star, 100F*1000000);
+        solarSystem = new UniStarSystem(solarRadius, star, 100F);
         Planet planetData = new Planet((float) (6.7F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20)));
         solarSystem.addStellarBody(
                planetData,
@@ -82,7 +82,9 @@ public class SolarStage extends Stage {
         }
 
         try {
-            solarSystem.tick();
+            for(int i = 0; i < 1000; i++) {
+                solarSystem.tick();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
