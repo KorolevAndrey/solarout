@@ -32,7 +32,8 @@ public class PlanetActor extends Image {
     }
 
     private void init() {
-        setScale(0.3f, 0.3f);
+        float scale = radius/getWidth();
+        setScale(scale, scale);
         setOrigin(getWidth()/2, getHeight()/2);
     }
 

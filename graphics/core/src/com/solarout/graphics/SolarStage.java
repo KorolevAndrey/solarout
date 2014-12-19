@@ -46,13 +46,13 @@ public class SolarStage extends Stage {
             String bodyName = (String) pairs.getKey();
             SphericStellarBody solarBody = (SphericStellarBody) pairs.getValue();
 
-            PlanetActor planet = new PlanetActor(30);
+            PlanetActor planet = new PlanetActor(20);
             planets.put(bodyName, planet);
             addActor(planet);
         }
 
 
-        PlanetActor planetStar = new PlanetActor(30);
+        PlanetActor planetStar = new PlanetActor(70);
         planetStar.setX(star.getPosition().x/meterPerPixel);
         planetStar.setY(star.getPosition().y/meterPerPixel);
         planets.put("star", planetStar);
