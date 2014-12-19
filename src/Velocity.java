@@ -10,7 +10,7 @@ public class Velocity {
     private float scalar;
 
     public Velocity(Vector3 vector, float scalar) {
-        this.vector = vector;
+        this.vector = vector.nor();
         this.scalar = scalar;
     }
 

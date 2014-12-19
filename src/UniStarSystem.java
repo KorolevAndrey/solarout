@@ -1,3 +1,4 @@
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import java.security.InvalidParameterException;
@@ -35,7 +36,6 @@ public class UniStarSystem {
     private float tickLength;
 
     public static final float G = 6.67384F * (10^11);
-
 
     /**
      * Dots per meter
@@ -93,80 +93,76 @@ public class UniStarSystem {
         }
     }
 
-    public synchronized void tick()  throws Exception {
+    public synchronized void tick() throws Exception {
         float tickLength = this.getTickLength();
 
-        HashMap<String, Velocity> bodiesVelocities = new HashMap<String, Velocity>();
+        HashMap<String, Acceleration> bodiesGravityAcceleration = new HashMap<String, Acceleration>();
 
         HashMap<String, SphericStellarBody> stellarBodies = this.getStellarBodies();
 
-        //calculate each stellar body change
+        //calculate each stellar body change without apply (Apply later in order all changes go synchronously)
         Iterator it = this.getStellarBodies().entrySet().iterator();
         while(it.hasNext()) {
             Map.Entry pairs = (Map.Entry)it.next();
             String bodyName = (String) pairs.getKey();
+            SphericStellarBody stellarBody = (SphericStellarBody) pairs.getValue();
             try {
-                bodiesVelocities.put(bodyName, this.calculateGravityAccelerationForStellarBody(bodyName));
+                bodiesGravityAcceleration.put(bodyName, this.calculateGravityAccelerationForStellarBody(stellarBody));
             } catch(Exception e) {
                 System.out.print("Error calculating gravity acceleration");
             }
         }
 
-        it = bodiesVelocities.entrySet().iterator();
+        //apply all changes
+        it = bodiesGravityAcceleration.entrySet().iterator();
         while(it.hasNext()) {
-            Map.Entry velocitiesPair = (Map.Entry)it.next();
-            String bodyName = (String) velocitiesPair.getKey();
-            Velocity bodyVelocity = (Velocity) velocitiesPair.getValue();
+            Map.Entry bodiesGravityAccelerationPair = (Map.Entry)it.next();
+            String bodyName = (String) bodiesGravityAccelerationPair.getKey();
+            Acceleration gravityAcceleration = (Acceleration) bodiesGravityAccelerationPair.getValue();
 
             SphericStellarBody stellarBody = stellarBodies.get(bodyName);
             if(stellarBody == null) {
                 throw new Exception("Error");
             }
 
-            stellarBody.moveBy(bodyVelocity, tickLength);
+            stellarBody.move(tickLength, gravityAcceleration);
         }
     }
 
-    protected Velocity calculateGravityAccelerationForStellarBody(String stellarBodyName) throws Exception {
-        HashMap<String, SphericStellarBody> stellarBodies = this.getStellarBodies();
-        SphericStellarBody stellarBody = stellarBodies.get(stellarBodyName);
-        if(stellarBody == null) {
+    protected Acceleration calculateGravityAccelerationForStellarBody(SphericStellarBody affectedStellarBody) throws Exception {
+        String affectedStellarBodyName = affectedStellarBody.getName();
+        if(affectedStellarBody == null) {
             throw new Exception("Invalid stellar body name");
         }
 
         Iterator it = this.getStellarBodies().entrySet().iterator();
 
-
-        Vector3 velocity = new Vector3();
-        float acceleration = 0;
-
+        Vector3 accelerationVelocityDirection = new Vector3();
+        float accelerationVelocityScalar = 0;
         Vector3 dir = new Vector3();
+
+
+        accelerationVelocityScalar = (float) (this.G * this.star.getMass() * affectedStellarBody.getMass() /  Math.pow(affectedStellarBody.getPosition().dist2(star.getPosition()), 2));
+        dir.set(star.getPosition()).sub(affectedStellarBody.getPosition()).nor();
+        accelerationVelocityDirection = new Vector3(dir).scale(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
 
         while(it.hasNext()) {
             Map.Entry pairs = (Map.Entry)it.next();
 
             //do not calculate gravitation with itself
-            if(pairs.getKey().equals(stellarBodyName)) {
+            if(pairs.getKey().equals(affectedStellarBodyName)) {
                 continue;
             }
 
-            SphericStellarBody body = (SphericStellarBody) pairs.getValue();
+            SphericStellarBody affectingStellarBody = (SphericStellarBody) pairs.getValue();
+            accelerationVelocityScalar = (float) (this.G * affectingStellarBody.getMass() * affectedStellarBody.getMass() /  Math.pow(affectedStellarBody.getPosition().dist2(affectingStellarBody.getPosition()), 2));
+            dir.set(affectingStellarBody.getPosition()).sub(affectedStellarBody.getPosition()).nor();
 
-            acceleration = (float) (this.G * body.getMass() * stellarBody.getMass() /  Math.pow(stellarBody.getPosition().dist2(body.getPosition()), 2));
-
-
-            dir.set(body.getPosition()).sub(stellarBody.getPosition()).nor();
-
-            if(velocity.isZero()) {
-                velocity = new Vector3(dir).scale(acceleration, acceleration, acceleration);
-            } else {
-                Vector3 tmp = new Vector3(dir).scale(acceleration, acceleration, acceleration);
-                velocity.dot(tmp);
-            }
-
+            Vector3 tmp = new Vector3(dir).scale(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
+            accelerationVelocityDirection.dot(tmp);
         }
 
-        Velocity gravityAcceleration = new Velocity(velocity, acceleration);
+        Acceleration gravityAcceleration = new Acceleration(accelerationVelocityDirection, accelerationVelocityScalar);
         return gravityAcceleration;
     }
 
@@ -209,4 +205,16 @@ public class UniStarSystem {
     public void setTickLength(float tickLength) {
         this.tickLength = tickLength;
     }
+
+    public void print() {
+        Iterator it = this.getStellarBodies().entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            String bodyName = (String) pairs.getKey();
+            SphericStellarBody solarBody = (SphericStellarBody) pairs.getValue();
+
+            System.out.print("Body: " + bodyName + "; Position: x(" + solarBody.getPosition().x + "), y(" + solarBody.getPosition().y + "), z(" +  + solarBody.getPosition().z + ")");
+        }
+    }
+
 }
