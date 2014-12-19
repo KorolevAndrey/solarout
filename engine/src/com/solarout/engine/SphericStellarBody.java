@@ -1,3 +1,5 @@
+package com.solarout.engine;
+
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -11,8 +13,8 @@ abstract public class SphericStellarBody extends MaterialPoint {
 
 
     /**
-     * @param radius Object radius in meters
-     * @param mass Object mass in kilograms
+     * @param radius   Object radius in meters
+     * @param mass     Object mass in kilograms
      * @param position initial position of Object
      * @param velocity velocity of Object
      */

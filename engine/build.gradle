@@ -16,9 +16,10 @@ allprojects {
 project(":solarout-engine") {
     apply plugin: "java"
 
+    sourceSets.main.java.srcDirs = ["src/"]
 
     dependencies {
-
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
     }
 }
 

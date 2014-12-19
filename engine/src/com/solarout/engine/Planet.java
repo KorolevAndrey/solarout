@@ -1,3 +1,5 @@
+package com.solarout.engine;
+
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -16,7 +18,6 @@ public class Planet extends SphericStellarBody {
 //    public Planet(float radius, float mass, Velocity velocity, String name) {
 //        super(new Vector3(0, 0, 0), radius, mass, velocity, name);
 //    }
-
 
 
 }

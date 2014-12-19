@@ -1,3 +1,5 @@
+package com.solarout.engine;
+
 import com.badlogic.gdx.math.Vector3;
 
 public class Main {
@@ -21,8 +23,8 @@ public class Main {
 
         try {
             solarSystem.print();
-            for(int i=1; i< 315360; i++) {
-                if(i%50000 == 0) {
+            for (int i = 1; i < 315360; i++) {
+                if (i % 50000 == 0) {
                     solarSystem.print();
                 }
                 solarSystem.tick();
@@ -31,7 +33,6 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
     }

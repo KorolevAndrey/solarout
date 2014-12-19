@@ -1,3 +1,5 @@
+package com.solarout.engine;
+
 import com.badlogic.gdx.math.Vector3;
 
 import java.math.BigInteger;
@@ -14,7 +16,6 @@ abstract public class MaterialPoint {
     protected String name;
 
     /**
-     *
      * @param position position of the material point
      */
 
