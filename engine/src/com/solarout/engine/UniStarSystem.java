@@ -160,7 +160,7 @@ public class UniStarSystem {
 
             SphericStellarBody affectingStellarBody = (SphericStellarBody) pairs.getValue();
             accelerationVelocityScalar = (float) (this.G * affectingStellarBody.getMass() / Math.pow(affectedStellarBody.getPosition().dst(affectingStellarBody.getPosition()), 2));
-            dir.set(affectingStellarBody.getPosition()).sub(affectedStellarBody.getPosition()).nor();
+            dir.set(affectingStellarBody.getPosition()).add(affectedStellarBody.getPosition()).nor();
 
             Vector3 tmp = new Vector3(dir).scl(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
             accelerationVelocityDirection.dot(tmp);
@@ -210,6 +210,7 @@ public class UniStarSystem {
 
     public void print() {
         Iterator it = this.getStellarBodies().entrySet().iterator();
+        System.out.print("Star: Position: x(" + this.star.getPosition().x + "), y("+this.star.getPosition().y+"), z("+this.star.getPosition().z +")");
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
             String bodyName = (String) pairs.getKey();
