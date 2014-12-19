@@ -21,7 +21,7 @@ public class PlanetActor extends Actor {
     }
 
     public PlanetActor(SphericStellarBody bodyDescriptor) {
-        radius = bodyDescriptor.getRadius();
+        radius = bodyDescriptor.getRadius()/1000000;
         init();
     }
 
