@@ -87,7 +87,7 @@ abstract public class SphericStellarBody extends MaterialPoint {
 
         this.velocity.getVector().set(velocityNormalized);
         this.move(deltaTime);
-        this.velocity.setScalar(this.velocity.getScalar() - velMagnitudeChange);
+        this.velocity.setScalar(this.velocity.getScalar() + velMagnitudeChange);
     }
 
 }
