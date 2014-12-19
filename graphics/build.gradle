@@ -58,6 +58,7 @@ project(":core") {
 
 
     dependencies {
+        compile project(":solarout-engine")
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
 }
