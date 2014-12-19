@@ -49,6 +49,7 @@ public class Planet3D {
 
     public void setPosition(float x, float y, float z) {
         instance.transform.setToTranslation(x, y, z);
+        position = new Vector3(x, y, z);
     }
 
     public Vector3 getPosition() {
