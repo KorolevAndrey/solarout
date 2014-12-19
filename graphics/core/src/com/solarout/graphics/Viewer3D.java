@@ -1,6 +1,7 @@
 package com.solarout.graphics;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +17,7 @@ import com.solarout.engine.*;
 import com.solarout.graphics.actors.Planet3D;
 import com.solarout.graphics.actors.PlanetActor;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,7 +38,8 @@ public class Viewer3D {
 
     private UniStarSystem solarSystem;
 
-    private float meterPerPixel = 60000000;
+    private float meterPerPixel = 600000000;
+    private float mpp2 = 1;
 
     public Viewer3D() {
         environment = new Environment();
@@ -61,12 +64,11 @@ public class Viewer3D {
     private void initWorld() {
         Star star = new Star((float) (6.955F * Math.pow(10, 4)), (float) (1.98855F * Math.pow(10, 26)));
         float solarRadius = (float) (2 * (Math.pow(10, 8)));
-
-        solarSystem = new UniStarSystem(solarRadius, star, 100F);
+        solarSystem = new UniStarSystem(solarRadius, star, 40F);
         solarSystem.addStellarBody(
-                new Planet((float) (6.7F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20))),
-                new Vector3((float) (1.49F * Math.pow(10, 7)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0.01F), (float) (3.5F * Math.pow(10, 1))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
+                new Planet((float) (3.5F * Math.pow(10, 1)), (float) (5.9 * Math.pow(10, 20))),
+                new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
+                new Velocity(new Vector3(0, 1, 0.F), (float) (3.5F * Math.pow(10, 3))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
 
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
@@ -88,12 +90,13 @@ public class Viewer3D {
     }
 
     private void setCoordinateToObject(SphericStellarBody body, Planet3D planet) {
-        Vector3 vec = new Vector3(body.getPosition().x / meterPerPixel, body.getPosition().y / meterPerPixel, body.getPosition().z / meterPerPixel);
+        Vector3 vec = new Vector3(body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
+        System.out.println(vec.y);
         planet.setPosition(vec.x, vec.y, vec.z);
     }
 
     private void pointCameraTo(SphericStellarBody body) {
-        Vector3 vec = new Vector3(body.getPosition().x / meterPerPixel, body.getPosition().y / meterPerPixel, body.getPosition().z / meterPerPixel);
+        Vector3 vec = new Vector3(body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
         cam.position.set(vec.x, vec.y, vec.z);
         cam.lookAt(vec.x, vec.y, vec.z);
         cam.update();
@@ -112,7 +115,8 @@ public class Viewer3D {
 
     public void act(float delta) {
         camController.update();
-
+        //cam.lookAt(0,0,0);
+        //cam.update();
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
         while (it.hasNext()) {
@@ -123,12 +127,14 @@ public class Viewer3D {
             setCoordinateToObject(solarBody, planets.get(bodyName));
         }
 
-        try {
-            for(int i = 0; i < 500; i++) {
-                solarSystem.tick();
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            try {
+                for (int i = 0; i < 500; i++) {
+                    solarSystem.tick();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }
