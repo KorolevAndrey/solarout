@@ -19,9 +19,11 @@ public class Main {
         solarSystem.addStellarBody(
                 new Planet((float) (3.5F * Math.pow(10, 1)), (float) (5.9 * Math.pow(10, 20))),
                 new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0.F), (float) (3.5F * Math.pow(10, 3))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
+                new Velocity(new Vector3(0, 1, 0), (float) (4.7189F * Math.pow(10, 2))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
 
         try {
+
+
             solarSystem.print();
             for (int i = 1; i < 6153600; i++) {
                 if (i % 200000 == 0) {

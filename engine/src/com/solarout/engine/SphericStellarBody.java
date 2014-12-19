@@ -73,12 +73,21 @@ abstract public class SphericStellarBody extends MaterialPoint {
     }
 
     public void moveWIthAcceleration(float deltaTime, Acceleration acceleration) {
+
+        Vector3 vNorm = new Vector3(velocity.getVector()).nor();
+        Vector3 aNorm = new Vector3(acceleration.getVector()).nor();
+        float cosAlpha = vNorm.dot(aNorm);
+
         float velocityChangeDueToAccelerationScalar = acceleration.getScalar();
         Vector3 accelerationNormalized = new Vector3(acceleration.getVector().scl(velocityChangeDueToAccelerationScalar, velocityChangeDueToAccelerationScalar, velocityChangeDueToAccelerationScalar));
         Vector3 velocityNormalized = new Vector3(velocity.getVector().scl(velocity.getScalar(), velocity.getScalar(), velocity.getScalar()));
         velocityNormalized.add(accelerationNormalized).nor();
+
+        float velMagnitudeChange = cosAlpha * acceleration.getScalar();
+
         this.velocity.getVector().set(velocityNormalized);
         this.move(deltaTime);
+        this.velocity.setScalar(this.velocity.getScalar() - velMagnitudeChange);
     }
 
 }

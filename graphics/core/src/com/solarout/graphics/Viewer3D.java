@@ -66,9 +66,9 @@ public class Viewer3D {
         float solarRadius = (float) (2 * (Math.pow(10, 8)));
         solarSystem = new UniStarSystem(solarRadius, star, 40F);
         solarSystem.addStellarBody(
-                new Planet((float) (3.5F * Math.pow(10, 1)), (float) (5.9 * Math.pow(10, 20))),
+                new Planet((float) (3.5F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20))),
                 new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0.F), (float) (3.5F * Math.pow(10, 3))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
+                new Velocity(new Vector3(0, 1, 0.F), (float) (4.7189F * Math.pow(10, 2))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
 
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
@@ -91,7 +91,7 @@ public class Viewer3D {
 
     private void setCoordinateToObject(SphericStellarBody body, Planet3D planet) {
         Vector3 vec = new Vector3(body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
-        System.out.println(vec.y);
+//        System.out.println(vec.y);
         planet.setPosition(vec.x, vec.y, vec.z);
     }
 
