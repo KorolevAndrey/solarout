@@ -162,7 +162,8 @@ public class Viewer3D {
             setCoordinateToObject(solarBody, planets.get(bodyName));
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+       // if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if(true) {
             try {
                 for (int i = 0; i < 2000; i++) {
                     solarSystem.tick();
