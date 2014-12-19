@@ -83,11 +83,11 @@ public class Viewer3D {
         solarSystem = new UniStarSystem(solarRadius, star, 40F);
 
         Planet earth = new Planet((float) (3.5F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20)));
-        solarSystem.addStellarBody(
+       /* solarSystem.addStellarBody(
                 earth,
                 new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
                 new Velocity(new Vector3(0, 1, 0.F), (float) (4.5F * Math.pow(10, 2))), star);
-
+*/ß
         solarSystem.addStellarBody(
                 new Planet((float) (0.8F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 15))),
                 new Vector3(0, 0, (float) (1.49F * Math.pow(10, 9))),
