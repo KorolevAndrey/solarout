@@ -30,6 +30,8 @@ import java.util.Map;
  */
 public class Viewer3D {
 
+    UIStage uiStage;
+
     private PerspectiveCamera cam;
     private ModelBatch modelBatch;
 
@@ -50,7 +52,10 @@ public class Viewer3D {
     private int tpIndex = 0;
     private Planet3D followingBody;
 
-    public Viewer3D() {
+    public Viewer3D(UIStage uiStage) {
+
+        this.uiStage = uiStage;
+
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
@@ -171,6 +176,8 @@ public class Viewer3D {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            uiStage.update(solarSystem);
 
             if(followingBody != null) {
                 if(tpIndex >= trajectoryPoints.length) {

@@ -10,9 +10,12 @@ public class SoraoutGraphics extends ApplicationAdapter {
 
 	private Viewer3D viewer;
 
+	private UIStage uiStage;
+
 	@Override
 	public void create () {
-		viewer = new Viewer3D();
+		uiStage = new UIStage();
+		viewer = new Viewer3D(uiStage);
 	}
 
 	@Override
@@ -22,5 +25,8 @@ public class SoraoutGraphics extends ApplicationAdapter {
 
 		viewer.act(Gdx.graphics.getDeltaTime());
 		viewer.draw();
+
+		uiStage.act();
+		uiStage.draw();
 	}
 }
