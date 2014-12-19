@@ -9,9 +9,9 @@ import java.security.SecureRandom;
 
 abstract public class MaterialPoint {
 
-    private Vector3 position;
+    protected Vector3 position;
 
-    private String name;
+    protected String name;
 
     /**
      *

@@ -1,4 +1,3 @@
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import java.security.InvalidParameterException;
@@ -35,7 +34,7 @@ public class UniStarSystem {
      */
     private float tickLength;
 
-    public static final float G = 6.67384F * (10^11);
+    public float G = 6.67384F / 100000000000F;
 
     /**
      * Dots per meter
@@ -49,10 +48,12 @@ public class UniStarSystem {
      * @param radius radius of system in meters
      * @param star
      */
-    public UniStarSystem(float radius, Star star) {
+    public UniStarSystem(float radius, Star star, float tickLength) {
         if(star.getRadius() >= radius) {
             throw new InvalidParameterException("Star radius should be less than system radius");
         }
+
+        this.setTickLength(tickLength);
 
         this.star = star;
         this.radius = radius;
@@ -78,7 +79,7 @@ public class UniStarSystem {
                     throw new InvalidParameterException("Your stellarBody position is partly inside your star, it should be at least little bit away :)");
                 }
 
-                position.add((float) star.getRadius());
+                position.add(star.getPosition());
 
                 stellarBody.setPosition(position);
 
@@ -125,7 +126,7 @@ public class UniStarSystem {
                 throw new Exception("Error");
             }
 
-            stellarBody.move(tickLength, gravityAcceleration);
+            stellarBody.moveWIthAcceleration(tickLength, gravityAcceleration);
         }
     }
 
@@ -142,7 +143,7 @@ public class UniStarSystem {
         Vector3 dir = new Vector3();
 
 
-        accelerationVelocityScalar = (float) (this.G * this.star.getMass() * affectedStellarBody.getMass() /  Math.pow(affectedStellarBody.getPosition().dist2(star.getPosition()), 2));
+        accelerationVelocityScalar = (float) (this.G * this.star.getMass() /  Math.pow(affectedStellarBody.getPosition().dst(star.getPosition()), 2));
         dir.set(star.getPosition()).sub(affectedStellarBody.getPosition()).nor();
         accelerationVelocityDirection = new Vector3(dir).scale(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
 
@@ -155,7 +156,7 @@ public class UniStarSystem {
             }
 
             SphericStellarBody affectingStellarBody = (SphericStellarBody) pairs.getValue();
-            accelerationVelocityScalar = (float) (this.G * affectingStellarBody.getMass() * affectedStellarBody.getMass() /  Math.pow(affectedStellarBody.getPosition().dist2(affectingStellarBody.getPosition()), 2));
+            accelerationVelocityScalar = (float) (this.G * affectingStellarBody.getMass()  /  Math.pow(affectedStellarBody.getPosition().dst(affectingStellarBody.getPosition()), 2));
             dir.set(affectingStellarBody.getPosition()).sub(affectedStellarBody.getPosition()).nor();
 
             Vector3 tmp = new Vector3(dir).scale(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
@@ -214,6 +215,7 @@ public class UniStarSystem {
             SphericStellarBody solarBody = (SphericStellarBody) pairs.getValue();
 
             System.out.print("Body: " + bodyName + "; Position: x(" + solarBody.getPosition().x + "), y(" + solarBody.getPosition().y + "), z(" +  + solarBody.getPosition().z + ")");
+            System.out.print(System.getProperty("line.separator"));
         }
     }
 
