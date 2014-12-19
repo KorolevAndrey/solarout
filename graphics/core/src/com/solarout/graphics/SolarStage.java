@@ -36,7 +36,7 @@ public class SolarStage extends Stage {
         solarSystem.addStellarBody(
                 new Planet((float) (6.7F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20))),
                 new Vector3((float) (1.49F * Math.pow(10, 7)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0.01F), (float) (3.5F * Math.pow(10, 1))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
+                new Velocity(new Vector3(0, 1, 0.01F), (float) (3.5F * Math.pow(10, 1))), star);
 
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
