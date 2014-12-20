@@ -16,10 +16,17 @@ public class Main {
         Star star = new Star((float) (6.955F * Math.pow(10, 4)), (float) (1.98855F * Math.pow(10, 26)));
         float solarRadius = (float) (2 * (Math.pow(10, 8)));
         UniStarSystem solarSystem = new UniStarSystem(solarRadius, star, 40F);
+
+        Planet earth = new Planet((float) (3.5F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20)), "Earth");
         solarSystem.addStellarBody(
-                new Planet((float) (3.5F * Math.pow(10, 1)), (float) (5.9 * Math.pow(10, 20))),
+                earth,
                 new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0), (float) (4.7189F * Math.pow(10, 2))), star);
+                new Velocity(new Vector3(0, 1, 0.F), (float) (4.5F * Math.pow(10, 2))), star);
+
+        solarSystem.addStellarBody(
+                new Planet((float) (0.3F * Math.pow(10, 2)), (float) (7.3477 * Math.pow(10, 18)), "Moon"),
+                new Vector3(0, 0, (float) (4F * Math.pow(10, 7))),
+                new Velocity(new Vector3(0, 1F, 0.0666F), (float) (4.5F * Math.pow(10, 2))), earth);
 
         try {
 

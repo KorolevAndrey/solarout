@@ -15,9 +15,9 @@ public class Planet extends SphericStellarBody {
 //        super(new Vector3(0, 0, 0), radius, mass, velocity);
 //    }
 //
-//    public Planet(float radius, float mass, Velocity velocity, String name) {
-//        super(new Vector3(0, 0, 0), radius, mass, velocity, name);
-//    }
+    public Planet(float radius, float mass, String name) {
+        super(new Vector3(0, 0, 0), radius, mass, new Velocity(new Vector3(0, 0, 0), 0), name);
+    }
 
 
 }

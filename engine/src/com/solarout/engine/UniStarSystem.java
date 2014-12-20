@@ -165,8 +165,10 @@ public class UniStarSystem {
             dir.set(affectingStellarBody.getPosition()).sub(affectedStellarBody.getPosition()).nor();
 
             Vector3 tmp = new Vector3(dir).scl(accelerationVelocityScalar, accelerationVelocityScalar, accelerationVelocityScalar);
-            accelerationVelocityDirection.dot(tmp);
+            accelerationVelocityDirection.add(tmp);
         }
+
+        accelerationVelocityScalar = accelerationVelocityDirection.len();
 
         Acceleration gravityAcceleration = new Acceleration(accelerationVelocityDirection, accelerationVelocityScalar);
         return gravityAcceleration;

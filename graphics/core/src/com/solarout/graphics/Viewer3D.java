@@ -83,15 +83,15 @@ public class Viewer3D {
         solarSystem = new UniStarSystem(solarRadius, star, 40F);
 
         Planet earth = new Planet((float) (3.5F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20)));
-       /* solarSystem.addStellarBody(
+        solarSystem.addStellarBody(
                 earth,
                 new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0.F), (float) (4.5F * Math.pow(10, 2))), star);
-*/
-        solarSystem.addStellarBody(
-                new Planet((float) (0.8F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 15))),
-                new Vector3(0, 0, (float) (1.49F * Math.pow(10, 9))),
-                new Velocity(new Vector3(0, 0, 1F), (float) (4.5F * Math.pow(10, 2))), earth);
+                new Velocity(new Vector3(0, 1, 0.F), (float) (3.8F * Math.pow(10, 2))), star);
+
+//        solarSystem.addStellarBody(
+//                new Planet((float) (0.3F * Math.pow(10, 2)), (float) (7.3477 * Math.pow(10, 18)), "Moon"),
+//                new Vector3(0, 0, (float) (4F * Math.pow(10, 7))),
+//                new Velocity(new Vector3(0, 1F, 0.0666F), (float) (4.0F * Math.pow(10, 2))), earth);
 
 
 
@@ -175,8 +175,8 @@ public class Viewer3D {
             setCoordinateToObject(solarBody, planets.get(bodyName));
         }
 
-       if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-//        if(true) {
+//       if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if(true) {
             try {
                 for (int i = 0; i < 2000; i++) {
                     solarSystem.tick();

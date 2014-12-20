@@ -31,6 +31,7 @@ abstract public class MaterialPoint {
 
     public MaterialPoint(Vector3 position, String name) {
         this.position = position;
+        this.name = name;
     }
 
     public Vector3 getPosition() {
