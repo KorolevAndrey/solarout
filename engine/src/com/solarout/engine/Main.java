@@ -26,7 +26,7 @@ public class Main {
         solarSystem.addStellarBody(
                 new Planet((float) (0.3F * Math.pow(10, 2)), (float) (7.3477 * Math.pow(10, 18)), "Moon"),
                 new Vector3(0, 0, (float) (4F * Math.pow(10, 7))),
-                new Velocity(new Vector3(0, 1F, 0.0666F), (float) (4.5F * Math.pow(10, 2))), earth);
+                new Velocity(new Vector3(0, 0, 0.0666F), (float) (0.3F * Math.pow(10, 2))), earth);
 
         try {
 

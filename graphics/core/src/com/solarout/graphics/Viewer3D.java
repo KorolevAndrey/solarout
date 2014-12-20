@@ -86,12 +86,12 @@ public class Viewer3D {
         solarSystem.addStellarBody(
                 earth,
                 new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0.F), (float) (3.8F * Math.pow(10, 2))), star);
+                new Velocity(new Vector3(0, 1, 0), (float) (3.8F * Math.pow(10, 2))), star);
 
-//        solarSystem.addStellarBody(
-//                new Planet((float) (0.3F * Math.pow(10, 2)), (float) (7.3477 * Math.pow(10, 18)), "Moon"),
-//                new Vector3(0, 0, (float) (4F * Math.pow(10, 7))),
-//                new Velocity(new Vector3(0, 1F, 0.0666F), (float) (4.0F * Math.pow(10, 2))), earth);
+        solarSystem.addStellarBody(
+                new Planet((float) (0.3F * Math.pow(10, 2)), (float) (7.3477 * Math.pow(10, 18)), "Moon"),
+                new Vector3(0, 0, (float) (4F * Math.pow(10, 5))),
+                new Velocity(new Vector3(0, 0, 0.0666F), (float) (0.1F * Math.pow(10, 2))), earth);
 
 
 

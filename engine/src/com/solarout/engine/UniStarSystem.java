@@ -88,7 +88,21 @@ public class UniStarSystem {
 
                 stellarBody.setPosition(position);
 
-                stellarBody.setVelocity(velocity);
+                if(relativeStellarBody.getVelocity().getVector().isZero()) {
+                    stellarBody.setVelocity(velocity);
+                } else {
+                    Velocity relativeBodyVelocity = relativeStellarBody.getVelocity();
+                    Vector3 tmpRelativeBodyVelocity = new Vector3(relativeBodyVelocity.getVector());
+                    tmpRelativeBodyVelocity.scl(relativeBodyVelocity.getScalar());
+                    Vector3 tmpMainBodyVelocity = new Vector3(velocity.getVector());
+                    tmpMainBodyVelocity.scl(velocity.getScalar()).add(tmpRelativeBodyVelocity);
+                    float tmpMainBodyVelocityLength = tmpMainBodyVelocity.len();
+                    tmpMainBodyVelocity.nor();
+                    float tmpMainBodyVelocityScalar = tmpMainBodyVelocityLength/tmpMainBodyVelocity.len();
+                    velocity.setScalar(tmpMainBodyVelocityScalar);
+                    velocity.setVector(tmpMainBodyVelocity);
+                    stellarBody.setVelocity(velocity);
+                }
 
                 String planetName = stellarBody.getName();
                 if (stellarBodies.containsKey(planetName)) {
