@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.CatmullRomSpline;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
 import com.solarout.engine.*;
 import com.solarout.graphics.actors.Planet3D;
@@ -48,7 +49,7 @@ public class Viewer3D {
 
     private ShapeRenderer shapeRenderer;
 
-    private Vector3[] trajectoryPoints;
+    private MyVector3 [] trajectoryPoints;
     private int tpIndex = 0;
     private Planet3D followingBody;
 
@@ -63,7 +64,7 @@ public class Viewer3D {
         modelBatch = new ModelBatch();
 
         cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(10f, 10f, 10f);
+        cam.position.set(0f, 10000f, 0f);
         cam.lookAt(0,0,0);
         cam.near = 1f;
         cam.far = 300f;
@@ -78,22 +79,55 @@ public class Viewer3D {
     }
 
     private void initWorld() {
-        Star star = new Star((float) (6.955F * Math.pow(10, 4)), (float) (1.98855F * Math.pow(10, 26)));
-        float solarRadius = (float) (2 * (Math.pow(10, 8)));
-        solarSystem = new UniStarSystem(solarRadius, star, 40F);
+//        Star star = new Star((float) (6.371 * Math.pow(10, 6)), (float) (5.97219 * Math.pow(10, 24)));
+//        float solarRadius = (float) (2 * (Math.pow(10, 8)));
+//        solarSystem = new UniStarSystem(solarRadius, star, 8F);
+//
+//        Planet earth = new Planet(1737000F, (float) (7.34767309F * Math.pow(10, 22)), "Earth");
+//        solarSystem.addStellarBody(
+//                earth,
+//                new MyVector3 ((float) (3.844F * Math.pow(10, 8)), 0, 0),
+//                new Velocity(new MyVector3 (0, (float) (1.023F * Math.pow(10, 3)), 0), (float) (1.023F * Math.pow(10, 3))), star);
+//        solarSystem.print();
 
-        Planet earth = new Planet((float) (3.5F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20)));
+
+//        Star star = new Star((float) (6.955F * Math.pow(10, 4)), (float) (5.972F * Math.pow(10, 24)));
+//        float solarRadius = (float) (2 * (Math.pow(10, 8)));
+//        solarSystem = new UniStarSystem(solarRadius, star, 5F);
+//
+//        Planet earth = new Planet((float) (3.5F * Math.pow(10, 2)), (float) (7.34767309F * Math.pow(10, 22)));
+//        solarSystem.addStellarBody(
+//                earth,
+//                new MyVector3 ((float) (3.8F * Math.pow(10, 8)), 0, 0),
+//                new Velocity(new MyVector3(0, (float) (1.023F * Math.pow(10, 3)), 0)), star);
+
+//        Planet moon = new Planet((float) (.5F * Math.pow(10, 2)), (float) (1F * Math.pow(10, 4)));
+//        solarSystem.addStellarBody(
+//                moon,
+//                new MyVector3 (0, (float) (6F * Math.pow(10, 5)), 0),
+//                new Velocity(new MyVector3 (0, (float) (.740F * Math.pow(10, 2)), 0)), earth);
+
+//        solarSystem.addStellarBody(
+//                new Planet((float) (0.3F * Math.pow(10, 2)), (float) (7.3477 * Math.pow(10, 18)), "Moon"),
+//                new MyVector3 (0, 0, (float) (4F * Math.pow(10, 7))),
+//                new Velocity(new MyVector3 (0, 0, 0.0666F), (float) (0.4F * Math.pow(10, 2))), earth);
+
+
+        Star star = new Star(6.958E8, 1.989E30);
+        solarSystem = new UniStarSystem(1.496E12, star, 10F);
+
+        Planet earth = new Planet((6.371 * Math.pow(10, 6)), 5.972E24, "earth");
+
         solarSystem.addStellarBody(
                 earth,
-                new Vector3((float) (1.49F * Math.pow(10, 9)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0), (float) (3.8F * Math.pow(10, 2))), star);
+                new MyVector3 (1.496E11, 0, 0),
+                new Velocity(new MyVector3 (0, 3.5E5, 0)), star);
 
+        Planet moon = new Planet(3.5E2, 7.34767309E22, "moon");
         solarSystem.addStellarBody(
-                new Planet((float) (0.3F * Math.pow(10, 2)), (float) (7.3477 * Math.pow(10, 18)), "Moon"),
-                new Vector3(0, 0, (float) (4F * Math.pow(10, 5))),
-                new Velocity(new Vector3(0, 0, 0.0666F), (float) (0.1F * Math.pow(10, 2))), earth);
-
-
+                moon,
+                new MyVector3 (3.8E8, 0, 0),
+                new Velocity(new MyVector3(0, 0, 1.023E3)), earth);
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
         while (it.hasNext()) {
@@ -116,23 +150,23 @@ public class Viewer3D {
     }
 
     private void setTrajectryFollower(Planet3D body) {
-        trajectoryPoints = new Vector3[200];
+        trajectoryPoints = new MyVector3 [200];
         followingBody = body;
         tpIndex = 0;
-        //CatmullRomSpline<Vector3> myCatmull = new CatmullRomSpline<Vector3>(trajectoryPoints, true);
+        //CatmullRomSpline<MyVector3 > myCatmull = new CatmullRomSpline<MyVector3 >(trajectoryPoints, true);
     }
 
     private void setCoordinateToObject(SphericStellarBody body, Planet3D planet) {
-        Vector3 vec = new Vector3(body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
+        MyVector3  vec = new MyVector3 (body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
 
 //        System.out.println(vec.y);
-        planet.setPosition(vec.x, vec.y, vec.z);
+        planet.setPosition((float) vec.x, (float) vec.y, (float) vec.z);
     }
 
     private void pointCameraTo(SphericStellarBody body) {
-        Vector3 vec = new Vector3(body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
-        cam.position.set(vec.x, vec.y+10, vec.z+10);
-        cam.lookAt(vec.x, vec.y, vec.z);
+        MyVector3  vec = new MyVector3 (body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
+        cam.position.set((float) vec.x, (float) vec.y+10, (float) vec.z+10);
+        cam.lookAt((float) vec.x, (float) vec.y, (float) vec.z);
         cam.update();
     }
 
@@ -154,7 +188,7 @@ public class Viewer3D {
 
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                 shapeRenderer.setColor(1, 1, 0, 1);
-                shapeRenderer.line(trajectoryPoints[i], trajectoryPoints[i+1]);
+                shapeRenderer.line(trajectoryPoints[i].toVector3(), trajectoryPoints[i+1].toVector3());
                 shapeRenderer.end();
             }
         }
@@ -178,7 +212,7 @@ public class Viewer3D {
 //       if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
         if(true) {
             try {
-                for (int i = 0; i < 2000; i++) {
+                for (int i = 0; i < 12000; i++) {
                     solarSystem.tick();
                 }
             } catch (Exception e) {
@@ -193,12 +227,13 @@ public class Viewer3D {
                     for(int i = 0; i < trajectoryPoints.length-1; i++) {
                         trajectoryPoints[i] = trajectoryPoints[i+1];
                     }
-                    trajectoryPoints[tpIndex] = new Vector3(followingBody.getPosition());
+                    trajectoryPoints[tpIndex] = new MyVector3(followingBody.getPosition());
                 } else {
-                    trajectoryPoints[tpIndex++] = new Vector3(followingBody.getPosition());
+                    trajectoryPoints[tpIndex++] = new MyVector3(followingBody.getPosition());
                 }
 
             }
+//           solarSystem.print();
         }
 
     }

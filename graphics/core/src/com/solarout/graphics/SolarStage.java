@@ -35,8 +35,8 @@ public class SolarStage extends Stage {
         solarSystem = new UniStarSystem(solarRadius, star, 100F);
         solarSystem.addStellarBody(
                 new Planet((float) (6.7F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20))),
-                new Vector3((float) (1.49F * Math.pow(10, 7)), 0, 0),
-                new Velocity(new Vector3(0, 1, 0.01F), (float) (3.5F * Math.pow(10, 1))), star);
+                new MyVector3((float) (1.49F * Math.pow(10, 7)), 0, 0),
+                new Velocity(new MyVector3(0, 1, 0.01F)), star);
 
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
@@ -53,13 +53,13 @@ public class SolarStage extends Stage {
 
         PlanetActor planetStar = new PlanetActor(70);
         planetStar.setColor(Color.YELLOW);
-        planetStar.setX(star.getPosition().x/meterPerPixel);
-        planetStar.setY(star.getPosition().y/meterPerPixel);
+        planetStar.setX((float) star.getPosition().x/meterPerPixel);
+        planetStar.setY((float) star.getPosition().y/meterPerPixel);
         planets.put("star", planetStar);
         addActor(planetStar);
 
-        ((OrthographicCamera)getCamera()).position.x = star.getPosition().x/meterPerPixel;
-        ((OrthographicCamera)getCamera()).position.y = star.getPosition().y/meterPerPixel;
+        ((OrthographicCamera)getCamera()).position.x = (float) star.getPosition().x/meterPerPixel;
+        ((OrthographicCamera)getCamera()).position.y = (float) star.getPosition().y/meterPerPixel;
 
     }
 

@@ -54,19 +54,22 @@ public class UIStage extends Stage {
     }
 
     public void update(UniStarSystem solarSystem) {
-        Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry) it.next();
-            String bodyName = (String) pairs.getKey();
-            SphericStellarBody solarBody = (SphericStellarBody) pairs.getValue();
+//        Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry pairs = (Map.Entry) it.next();
+//            String bodyName = (String) pairs.getKey();
+//            SphericStellarBody solarBody = (SphericStellarBody) pairs.getValue();
 
+            SphericStellarBody earth = solarSystem.getStellarBodies().get("earth");
+            SphericStellarBody moon = solarSystem.getStellarBodies().get("moon");
 
-            updateLbl(xPos, "X: " + solarBody.getPosition().x);
-            updateLbl(yPos, "Y: " + solarBody.getPosition().y);
-            updateLbl(zPos, "Z: " + solarBody.getPosition().z);
-            updateLbl(scalar, "SCALAR: " + solarBody.getVelocity().getScalar());
+//            updateLbl(xPos, "X: " + solarBody.getPosition().x);
+//            updateLbl(yPos, "Y: " + solarBody.getPosition().y);
+//            updateLbl(zPos, "Z: " + solarBody.getPosition().z);
+//            updateLbl(scalar, "SCALAR: " + solarBody.getVelocity().getScalar());
+                updateLbl(scalar, "SCALAR: " + (earth.getPosition().len() - moon.getPosition().len()));
 
-        }
+//        }
     }
 
     private void updateLbl(Label lbl, String value) {

@@ -1,6 +1,6 @@
 package com.solarout.engine;
 
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector3 ;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -11,7 +11,7 @@ import java.security.SecureRandom;
 
 abstract public class MaterialPoint {
 
-    protected Vector3 position;
+    protected MyVector3  position;
 
     protected String name;
 
@@ -19,7 +19,7 @@ abstract public class MaterialPoint {
      * @param position position of the material point
      */
 
-    public MaterialPoint(Vector3 position) {
+    public MaterialPoint(MyVector3  position) {
         this.position = position;
         this.assignRandomName();
     }
@@ -29,16 +29,16 @@ abstract public class MaterialPoint {
         this.name = "Object-" + new BigInteger(30, random).toString(32);
     }
 
-    public MaterialPoint(Vector3 position, String name) {
+    public MaterialPoint(MyVector3  position, String name) {
         this.position = position;
         this.name = name;
     }
 
-    public Vector3 getPosition() {
+    public MyVector3  getPosition() {
         return position;
     }
 
-    public void setPosition(Vector3 position) {
+    public void setPosition(MyVector3  position) {
         this.position = position;
     }
 

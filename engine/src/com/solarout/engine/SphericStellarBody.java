@@ -1,14 +1,14 @@
 package com.solarout.engine;
 
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector3 ;
 
 /**
  * Created by aram on 12/15/2014.
  */
 abstract public class SphericStellarBody extends MaterialPoint {
 
-    private float radius;
-    private float mass;
+    private double radius;
+    private double mass;
     private Velocity velocity;
 
 
@@ -18,7 +18,7 @@ abstract public class SphericStellarBody extends MaterialPoint {
      * @param position initial position of Object
      * @param velocity velocity of Object
      */
-    public SphericStellarBody(Vector3 position, float radius, float mass, Velocity velocity) {
+    public SphericStellarBody(MyVector3  position, double radius, double mass, Velocity velocity) {
         super(position);
 
         this.radius = radius;
@@ -26,7 +26,7 @@ abstract public class SphericStellarBody extends MaterialPoint {
         this.velocity = velocity;
     }
 
-    public SphericStellarBody(Vector3 position, float radius, float mass, Velocity velocity, String name) {
+    public SphericStellarBody(MyVector3  position, double radius, double mass, Velocity velocity, String name) {
         super(position, name);
 
         this.radius = radius;
@@ -35,19 +35,19 @@ abstract public class SphericStellarBody extends MaterialPoint {
     }
 
 
-    public float getRadius() {
+    public double getRadius() {
         return radius;
     }
 
-    public void setRadius(float radius) {
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 
-    public float getMass() {
+    public double getMass() {
         return mass;
     }
 
-    public void setMass(float mass) {
+    public void setMass(double mass) {
         this.mass = mass;
     }
 
@@ -60,34 +60,14 @@ abstract public class SphericStellarBody extends MaterialPoint {
     }
 
 
-    public void move(float deltaTime) {
-        Velocity bodyVelocity = this.getVelocity();
-        Vector3 velocity = new Vector3(bodyVelocity.getVector()).
-                scl(
-                        bodyVelocity.getScalar(),
-                        bodyVelocity.getScalar(),
-                        bodyVelocity.getScalar());
-        Vector3 movement = new Vector3();
-        movement.set(velocity).scl(deltaTime, deltaTime, deltaTime);
-        this.position.add(movement);
+    public void move(double deltaTime) {
+        this.position.add(this.getVelocity().getVector().cpy().scl(deltaTime));
     }
 
-    public void moveWIthAcceleration(float deltaTime, Acceleration acceleration) {
-
-        Vector3 vNorm = new Vector3(velocity.getVector()).nor();
-        Vector3 aNorm = new Vector3(acceleration.getVector()).nor();
-        float cosAlpha = vNorm.dot(aNorm);
-
-        float velocityChangeDueToAccelerationScalar = acceleration.getScalar();
-        Vector3 accelerationNormalized = new Vector3(acceleration.getVector().scl(velocityChangeDueToAccelerationScalar, velocityChangeDueToAccelerationScalar, velocityChangeDueToAccelerationScalar));
-        Vector3 velocityNormalized = new Vector3(velocity.getVector().scl(velocity.getScalar(), velocity.getScalar(), velocity.getScalar()));
-        velocityNormalized.add(accelerationNormalized).nor();
-
-        float velMagnitudeChange = cosAlpha * acceleration.getScalar();
-
-        this.velocity.getVector().set(velocityNormalized);
+    public void moveWIthAcceleration(double deltaTime, Acceleration acceleration) {
+        Velocity acceleratedVelocity = acceleration.accelerate(this.getVelocity(), deltaTime);
+        this.setVelocity(acceleratedVelocity);
         this.move(deltaTime);
-        this.velocity.setScalar(this.velocity.getScalar() + velMagnitudeChange);
     }
 
 }

@@ -17,7 +17,7 @@ public class PlanetActor extends Image {
 
     private ShapeRenderer shapeRenderer;
 
-    private float radius;
+    private double radius;
 
     public PlanetActor(float radius) {
         super(new Texture(Gdx.files.internal("pl1.png")));
@@ -32,8 +32,8 @@ public class PlanetActor extends Image {
     }
 
     private void init() {
-        float scale = radius/getWidth();
-        setScale(scale, scale);
+        double scale = radius/getWidth();
+        setScale((float) scale, (float) scale);
         setOrigin(getWidth()/2, getHeight()/2);
     }
 
