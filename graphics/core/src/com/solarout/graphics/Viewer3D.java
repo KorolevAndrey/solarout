@@ -44,7 +44,7 @@ public class Viewer3D {
 
     private UniStarSystem solarSystem;
 
-    private float meterPerPixel = 200000000;
+    private float meterPerPixel = 200000000000f;
     private float mpp2 = 1;
 
     private ShapeRenderer shapeRenderer;
