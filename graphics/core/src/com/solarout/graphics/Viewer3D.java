@@ -14,11 +14,13 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.CatmullRomSpline;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
 import com.solarout.engine.*;
 import com.solarout.graphics.actors.Planet3D;
 import com.solarout.graphics.actors.PlanetActor;
+import com.solarout.graphics.actors.Trajectory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -44,14 +46,11 @@ public class Viewer3D {
 
     private UniStarSystem solarSystem;
 
-    private float meterPerPixel = 200000000000f;
+    private float meterPerPixel = 30000000000f;
     private float mpp2 = 1;
 
-    private ShapeRenderer shapeRenderer;
-
-    private MyVector3 [] trajectoryPoints;
-    private int tpIndex = 0;
-    private Planet3D followingBody;
+    public ArrayList<Trajectory> trajectories = new ArrayList<Trajectory>();
+    public ArrayList<Color> colorMap = new ArrayList<Color>();
 
     public Viewer3D(UIStage uiStage) {
 
@@ -73,7 +72,16 @@ public class Viewer3D {
         camController = new CameraInputController(cam);
         Gdx.input.setInputProcessor(camController);
 
-        shapeRenderer = new ShapeRenderer();
+        colorMap.add(0, Color.BLUE);
+        colorMap.add(1, Color.CYAN);
+        colorMap.add(2, Color.GREEN);
+        colorMap.add(3, Color.MAGENTA);
+        colorMap.add(4, Color.NAVY);
+        colorMap.add(5, Color.OLIVE);
+        colorMap.add(6, Color.ORANGE);
+        colorMap.add(7, Color.YELLOW);
+        colorMap.add(8, Color.RED);
+
 
         initWorld();
     }
@@ -140,21 +148,22 @@ public class Viewer3D {
             planets.put(bodyName, planet);
             setCoordinateToObject(solarBody, planet);
 
-            setTrajectryFollower(planet);
+            int clr = MathUtils.random(0, 8);
+            Color color = colorMap.get(clr);
+            setTrajectryFollower(planet, color);
         }
 
         Planet3D starPlanet = new Planet3D(new Texture(Gdx.files.internal("texture_sun.jpg")), 2f);
         planets.put("star", starPlanet);
         setCoordinateToObject(star, starPlanet);
 
-        pointCameraTo(star);
+        pointCameraTo(moon);
     }
 
-    private void setTrajectryFollower(Planet3D body) {
-        trajectoryPoints = new MyVector3 [200];
-        followingBody = body;
-        tpIndex = 0;
-        //CatmullRomSpline<MyVector3 > myCatmull = new CatmullRomSpline<MyVector3 >(trajectoryPoints, true);
+    private void setTrajectryFollower(Planet3D body, Color color) {
+        Trajectory trajectory = new Trajectory();
+        trajectory.setBody(body, color);
+        trajectories.add(trajectory);
     }
 
     private void setCoordinateToObject(SphericStellarBody body, Planet3D planet) {
@@ -181,18 +190,10 @@ public class Viewer3D {
 
         modelBatch.end();
 
-        if(followingBody != null) {
-            for(int i = 0; i < trajectoryPoints.length-1; i++) {
-                if(trajectoryPoints[i+1] == null) break;
-
-                shapeRenderer.setProjectionMatrix(cam.combined);
-
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                shapeRenderer.setColor(1, 1, 0, 1);
-                shapeRenderer.line(trajectoryPoints[i].toVector3(), trajectoryPoints[i+1].toVector3());
-                shapeRenderer.end();
-            }
+        for(int i = 0; i < trajectories.size(); i++) {
+            trajectories.get(i).draw(cam);
         }
+
 
     }
 
@@ -213,7 +214,7 @@ public class Viewer3D {
 //       if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
         if(true) {
             try {
-                for (int i = 0; i < 12000; i++) {
+                for (int i = 0; i < 1200; i++) {
                     solarSystem.tick();
                 }
             } catch (Exception e) {
@@ -222,19 +223,9 @@ public class Viewer3D {
 
             uiStage.update(solarSystem);
 
-            if(followingBody != null) {
-                if(tpIndex >= trajectoryPoints.length) {
-                    tpIndex = trajectoryPoints.length-1;
-                    for(int i = 0; i < trajectoryPoints.length-1; i++) {
-                        trajectoryPoints[i] = trajectoryPoints[i+1];
-                    }
-                    trajectoryPoints[tpIndex] = new MyVector3(followingBody.getPosition());
-                } else {
-                    trajectoryPoints[tpIndex++] = new MyVector3(followingBody.getPosition());
-                }
-
+            for(int i = 0; i < trajectories.size(); i++) {
+                trajectories.get(i).update();
             }
-//           solarSystem.print();
         }
 
     }
