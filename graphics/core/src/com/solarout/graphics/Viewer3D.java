@@ -46,7 +46,7 @@ public class Viewer3D {
 
     private UniStarSystem solarSystem;
 
-    private float meterPerPixel = 30000000000f;
+    private float meterPerPixel = 10000000000f;
     private float mpp2 = 1;
 
     public ArrayList<Trajectory> trajectories = new ArrayList<Trajectory>();
@@ -144,7 +144,7 @@ public class Viewer3D {
             String bodyName = (String) pairs.getKey();
             SphericStellarBody solarBody = (SphericStellarBody) pairs.getValue();
 
-            Planet3D planet = new Planet3D(new Texture(Gdx.files.internal("p1.jpg")), 0.3f);
+            Planet3D planet = new Planet3D(new Texture(Gdx.files.internal("p1.jpg")), 0.05f);
             planets.put(bodyName, planet);
             setCoordinateToObject(solarBody, planet);
 
