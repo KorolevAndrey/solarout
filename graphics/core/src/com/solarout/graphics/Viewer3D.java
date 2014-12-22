@@ -123,14 +123,14 @@ public class Viewer3D {
 
         Star star = new Star(6.958E8, 1.989E30);
 //        Star star = new Star(6.371E6, 5.972E24);
-        solarSystem = new UniStarSystem(1.496E12, star, 4F);
+        solarSystem = new UniStarSystem(1.496E12, star, 8F);
 
         Planet earth = new Planet(6.371E6, 5.972E24, "earth");
 
         solarSystem.addStellarBody(
                 earth,
                 new MyVector3 (1.496E11, 0, 0),
-                new Velocity(new MyVector3 (0, 3.5E5, 0)), star);
+                new Velocity(new MyVector3 (0, 3E4, 0)), star);
 
         Planet moon = new Planet(3.5E2, 7.34767309E22, "moon");
         solarSystem.addStellarBody(
@@ -157,7 +157,7 @@ public class Viewer3D {
         planets.put("star", starPlanet);
         setCoordinateToObject(star, starPlanet);
 
-        pointCameraTo(moon);
+        pointCameraTo(earth);
     }
 
     private void setTrajectryFollower(Planet3D body, Color color) {
