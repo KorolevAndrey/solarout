@@ -114,9 +114,10 @@ public class Viewer3D {
 
 
         Star star = new Star(6.958E8, 1.989E30);
-        solarSystem = new UniStarSystem(1.496E12, star, 10F);
+//        Star star = new Star(6.371E6, 5.972E24);
+        solarSystem = new UniStarSystem(1.496E7, star, 4F);
 
-        Planet earth = new Planet((6.371 * Math.pow(10, 6)), 5.972E24, "earth");
+        Planet earth = new Planet(6.371E6, 5.972E24, "earth");
 
         solarSystem.addStellarBody(
                 earth,
@@ -127,7 +128,7 @@ public class Viewer3D {
         solarSystem.addStellarBody(
                 moon,
                 new MyVector3 (3.8E8, 0, 0),
-                new Velocity(new MyVector3(0, 0, 1.023E3)), earth);
+                new Velocity(new MyVector3(0, 0, 1.0233E3)), earth);
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
         while (it.hasNext()) {
