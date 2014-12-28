@@ -130,7 +130,7 @@ public class Viewer3D {
         Planet iss = new Planet(5.5E4, 7.34767309E10, "iss");
         solarSystem.addStellarBody(
                 iss,
-                new DoubleVector3 (0, 1E7, 0),
+                new DoubleVector3 (0, 8E6, 0),
                 new Velocity(new DoubleVector3(0, 0, 1.0233E3)), moon);
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
