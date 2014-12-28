@@ -120,14 +120,14 @@ public class Viewer3D {
 //                new DoubleVector3(1.496E11, 0, 0),
 //                new Velocity(new DoubleVector3(0, 3E4, 0)), star);
 
-        Planet moon = new Planet(3.5E5, 7.34767309E22, "moon");
+        Planet moon = new Planet(3.5E5, 7.34767309E22, null, "moon");
         solarSystem.addStellarBody(
                 moon,
                 new DoubleVector3 (3.8E8, 0, 0),
                 new Velocity(new DoubleVector3(0, 0, 1.0233E3)), star);
 
 
-        Planet iss = new Planet(5.5E4, 7.34767309E10, "iss");
+        Planet iss = new Planet(5.5E4, 7.34767309E10, null, "iss");
         solarSystem.addStellarBody(
                 iss,
                 new DoubleVector3 (0, 8E6, 0),

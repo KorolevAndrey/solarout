@@ -11,21 +11,28 @@ public class Main {
 //                new MyVector3 ((double) (1.49F * Math.pow(10, 11)), 0, 0),
 //                n ew Velocity(new MyVector3 (0, 1, 0.01F), (double) (3.5F * Math.pow(10, 4))), UniStarSystem.RelativeObject.RELATIVE_TO_STAR);
 
-        Star star = new Star(6.958E8, 1.989E30);
-        UniStarSystem solarSystem = new UniStarSystem(1.496E12, star, 1F);
+        Star star = new Star(6.371E6, 5.972E24);
+        UniStarSystem solarSystem = new UniStarSystem(1.496E7, star, 0.5F);
 
-        Planet earth = new Planet((6.371 * Math.pow(10, 6)), 5.972E24);
+//        Planet earth = new Planet(6.371E6, 5.972E24, "earth");
+//        solarSystem.addStellarBody(
+//                earth,
+//                new DoubleVector3(1.496E11, 0, 0),
+//                new Velocity(new DoubleVector3(0, 3E4, 0)), star);
 
-        solarSystem.addStellarBody(
-                earth,
-                new DoubleVector3(1.496E11, 0, 0),
-                new Velocity(new DoubleVector3(0, 3.5E5, 0)), star);
-
-        Planet moon = new Planet(3.5E2, 7.34767309E22);
+        Planet moon = new Planet(3.5E5, 7.34767309E22, null, "moon");
         solarSystem.addStellarBody(
                 moon,
-                new DoubleVector3(3.8E8, 0, 0),
-                new Velocity(new DoubleVector3(0, 0, 1.023E3)), earth);
+                new DoubleVector3 (3.8E8, 0, 0),
+                new Velocity(new DoubleVector3(0, 0, 1.0233E3)), star);
+
+
+        Planet iss = new Planet(5.5E4, 7.34767309E10, null, "iss");
+        solarSystem.addStellarBody(
+                iss,
+                new DoubleVector3 (0, 8E6, 0),
+                new Velocity(new DoubleVector3(0, 0, 1.0233E3)), moon);
+
 
 //        Star star = new Star((double) (6.955F * Math.pow(10, 4)), (double) (1.98855F * Math.pow(10, 26)));
 //        double solarRadius = (double) (2 * (Math.pow(10, 8)));

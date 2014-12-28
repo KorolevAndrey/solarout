@@ -24,14 +24,28 @@ public class SolarStage extends Stage {
     public SolarStage() {
         super();
 
-        Star star = new Star((float) (6.955F * Math.pow(10, 4)), (float) (1.98855F * Math.pow(10, 26)));
-        float solarRadius = (float) (2 * (Math.pow(10, 8)));
+        Star star = new Star(6.371E6, 5.972E24);
+        solarSystem = new UniStarSystem(1.496E7, star, 0.5F);
 
-        solarSystem = new UniStarSystem(solarRadius, star, 100F);
+//        Planet earth = new Planet(6.371E6, 5.972E24, "earth");
+//        solarSystem.addStellarBody(
+//                earth,
+//                new DoubleVector3(1.496E11, 0, 0),
+//                new Velocity(new DoubleVector3(0, 3E4, 0)), star);
+
+        Planet moon = new Planet(3.5E5, 7.34767309E22, null, "moon");
         solarSystem.addStellarBody(
-                new Planet((float) (6.7F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20))),
-                new DoubleVector3((float) (1.49F * Math.pow(10, 7)), 0, 0),
-                new Velocity(new DoubleVector3(0, 1, 0.01F)), star);
+                moon,
+                new DoubleVector3 (3.8E8, 0, 0),
+                new Velocity(new DoubleVector3(0, 0, 1.0233E3)), star);
+
+
+        Planet iss = new Planet(5.5E4, 7.34767309E10, null, "iss");
+        solarSystem.addStellarBody(
+                iss,
+                new DoubleVector3 (0, 8E6, 0),
+                new Velocity(new DoubleVector3(0, 0, 1.0233E3)), moon);
+
 
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();

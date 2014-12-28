@@ -10,6 +10,9 @@ import java.security.SecureRandom;
 abstract public class MaterialPoint {
 
     protected DoubleVector3 position;
+    private Velocity velocity;
+
+    protected MaterialPoint parent;
 
     protected String name;
 
@@ -17,8 +20,10 @@ abstract public class MaterialPoint {
      * @param position position of the material point
      */
 
-    public MaterialPoint(DoubleVector3 position) {
+    public MaterialPoint(DoubleVector3 position, Velocity velocity, MaterialPoint parent) {
         this.position = position;
+        this.velocity = velocity;
+        this.parent = parent;
         this.assignRandomName();
     }
 
@@ -27,8 +32,10 @@ abstract public class MaterialPoint {
         this.name = "Object-" + new BigInteger(30, random).toString(32);
     }
 
-    public MaterialPoint(DoubleVector3 position, String name) {
+    public MaterialPoint(DoubleVector3 position, Velocity velocity, MaterialPoint parent, String name) {
         this.position = position;
+        this.velocity = velocity;
+        this.parent = parent;
         this.name = name;
     }
 
@@ -46,5 +53,51 @@ abstract public class MaterialPoint {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Velocity getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Velocity velocity) {
+        this.velocity = velocity;
+    }
+
+    public double getVelocityScalar(boolean relativeToParent) {
+        return this.getVelocityVector(relativeToParent).len();
+    }
+
+    public DoubleVector3 getVelocityVector(boolean relativeToParent) {
+        DoubleVector3 velocity = this.getVelocity().getVector().cpy();
+        if(relativeToParent && this.getParent() != null) {
+            velocity.sub(this.getParent().getVelocity().getVector());
+        }
+
+        return velocity;
+    }
+
+    public DoubleVector3 getPositionVector(boolean relativeToParent) {
+        DoubleVector3 position = this.getPosition().cpy();
+        if(relativeToParent && this.getParent() != null) {
+            position.sub(this.getParent().getPosition());
+        }
+
+        return position;
+    }
+
+    public double getDistanceFromParent() {
+        if(this.getParent() != null) {
+            return this.getPositionVector(true).len();
+        }
+
+        return 0;
+    }
+
+    public MaterialPoint getParent() {
+        return parent;
+    }
+
+    public void setParent(MaterialPoint parent) {
+        this.parent = parent;
     }
 }

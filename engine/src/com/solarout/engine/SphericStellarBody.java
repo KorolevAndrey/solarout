@@ -7,7 +7,6 @@ abstract public class SphericStellarBody extends MaterialPoint {
 
     private double radius;
     private double mass;
-    private Velocity velocity;
 
 
     /**
@@ -16,20 +15,18 @@ abstract public class SphericStellarBody extends MaterialPoint {
      * @param position initial position of Object
      * @param velocity velocity of Object
      */
-    public SphericStellarBody(DoubleVector3 position, double radius, double mass, Velocity velocity) {
-        super(position);
+    public SphericStellarBody(DoubleVector3 position, double radius, double mass, Velocity velocity, MaterialPoint parent) {
+        super(position, velocity, parent);
 
         this.radius = radius;
         this.mass = mass;
-        this.velocity = velocity;
     }
 
-    public SphericStellarBody(DoubleVector3 position, double radius, double mass, Velocity velocity, String name) {
-        super(position, name);
+    public SphericStellarBody(DoubleVector3 position, double radius, double mass, Velocity velocity, MaterialPoint parent, String name) {
+        super(position, velocity, parent, name);
 
         this.radius = radius;
         this.mass = mass;
-        this.velocity = velocity;
     }
 
 
@@ -47,14 +44,6 @@ abstract public class SphericStellarBody extends MaterialPoint {
 
     public void setMass(double mass) {
         this.mass = mass;
-    }
-
-    public Velocity getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(Velocity velocity) {
-        this.velocity = velocity;
     }
 
 

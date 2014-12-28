@@ -7,9 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.solarout.engine.DoubleVector3;
 import com.solarout.engine.SphericStellarBody;
 import com.solarout.engine.UniStarSystem;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -26,6 +29,7 @@ public class UIStage extends Stage {
 
     private Label scalar;
     private Label scalarVec;
+    private Label distance;
 
     private UniStarSystem solarSystem;
 
@@ -72,6 +76,11 @@ public class UIStage extends Stage {
         scalarVec.setY(scalar.getY()-scalarVec.getHeight()-10f);
         addActor(scalarVec);
 
+        distance = new Label("", textStyle);
+        distance.setWidth(100);
+        distance.setY(scalarVec.getY()-distance.getHeight()-10f);
+        addActor(distance);
+
         addListener(new InputListener() {
             public boolean keyUp (InputEvent event, int keycode) {
                 if(keycode == 61) {
@@ -104,8 +113,17 @@ public class UIStage extends Stage {
                 updateLbl(xPos, "X: " + solarBody.getPosition().x);
                 updateLbl(yPos, "Y: " + solarBody.getPosition().y);
                 updateLbl(zPos, "Z: " + solarBody.getPosition().z);
-                updateLbl(scalar, "vel scalar: " + solarBody.getVelocity().getScalar());
-                updateLbl(scalarVec, "vel vector: x:" + solarBody.getVelocity().getVector().x + ", y:" + solarBody.getVelocity().getVector().y + ", z:" + solarBody.getVelocity().getVector().z);
+                DoubleVector3 velocityVector = solarBody.getVelocityVector(true);
+                updateLbl(scalar, String.format("Vel scalar: %.0f m/s", velocityVector.len()));
+//                updateLbl(scalar, "Vel scalar: %.0f km/s" + velocityVector.len());
+//                updateLbl(scalarVec, "vel vector: x:" + velocityVector.x + ", y:" + velocityVector.y + ", z:" + velocityVector.z);
+
+                DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+                decimalFormatSymbols.setDecimalSeparator('.');
+                decimalFormatSymbols.setGroupingSeparator(',');
+                DecimalFormat decimalFormat = new DecimalFormat("###,###,###,###", decimalFormatSymbols);
+
+                updateLbl(distance, String.format("distance: %s km", (decimalFormat.format(solarBody.getDistanceFromParent() / 1000d))));
             }
             iter++;
         }

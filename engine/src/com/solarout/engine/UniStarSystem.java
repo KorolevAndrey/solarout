@@ -73,28 +73,30 @@ public class UniStarSystem {
             throw new InvalidParameterException("Your stellarBody radius + star raius should be less than system radius, first please increase system radius");
         }
 
-                position.add(relativeStellarBody.getPosition());
+        stellarBody.setParent(relativeStellarBody);
 
-                stellarBody.setPosition(position);
+        position.add(relativeStellarBody.getPosition());
 
-                if(relativeStellarBody.getVelocity().getVector().isZero()) {
-                    stellarBody.setVelocity(velocity);
-                } else {
-                    Velocity relativeBodyVelocity = relativeStellarBody.getVelocity();
-                    DoubleVector3 tmpRelativeBodyVelocity = new DoubleVector3(relativeBodyVelocity.getVector());
+        stellarBody.setPosition(position);
 
-                    DoubleVector3 tmpMainBodyVelocity = new DoubleVector3(velocity.getVector());
-                    tmpMainBodyVelocity.add(tmpRelativeBodyVelocity);
-                    velocity.setVector(tmpMainBodyVelocity);
-                    stellarBody.setVelocity(velocity);
-                }
+        if(relativeStellarBody.getVelocity().getVector().isZero()) {
+            stellarBody.setVelocity(velocity);
+        } else {
+            Velocity relativeBodyVelocity = relativeStellarBody.getVelocity();
+            DoubleVector3 tmpRelativeBodyVelocity = new DoubleVector3(relativeBodyVelocity.getVector());
 
-                String planetName = stellarBody.getName();
-                if (stellarBodies.containsKey(planetName)) {
-                    throw new InvalidParameterException("Planet by this name already exist in your system, please change name of stellarBody first");
-                }
-                System.out.print(planetName);
-                stellarBodies.put(planetName, stellarBody);
+            DoubleVector3 tmpMainBodyVelocity = new DoubleVector3(velocity.getVector());
+            tmpMainBodyVelocity.add(tmpRelativeBodyVelocity);
+            velocity.setVector(tmpMainBodyVelocity);
+            stellarBody.setVelocity(velocity);
+        }
+
+        String planetName = stellarBody.getName();
+        if (stellarBodies.containsKey(planetName)) {
+            throw new InvalidParameterException("Planet by this name already exist in your system, please change name of stellarBody first");
+        }
+        System.out.print(planetName);
+        stellarBodies.put(planetName, stellarBody);
     }
 
     public synchronized void tick() throws Exception {

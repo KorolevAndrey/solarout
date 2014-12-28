@@ -5,16 +5,16 @@ package com.solarout.engine;
  */
 public class Planet extends SphericStellarBody {
 
-    public Planet(double radius, double mass) {
-        super(new DoubleVector3(0, 0, 0), radius, mass, new Velocity(new DoubleVector3(0, 0, 0)));
+    public Planet(double radius, double mass, MaterialPoint parent) {
+        super(new DoubleVector3(0, 0, 0), radius, mass, new Velocity(new DoubleVector3(0, 0, 0)), parent);
     }
 
 //    public Planet(double radius, double mass, Velocity velocity) {
 //        super(new MyVector3 (0, 0, 0), radius, mass, velocity);
 //    }
 //
-    public Planet(double radius, double mass, String name) {
-        super(new DoubleVector3(0, 0, 0), radius, mass, new Velocity(new DoubleVector3(0, 0, 0)), name);
+    public Planet(double radius, double mass, MaterialPoint parent, String name) {
+        super(new DoubleVector3(0, 0, 0), radius, mass, new Velocity(new DoubleVector3(0, 0, 0)), parent, name);
     }
 
 
