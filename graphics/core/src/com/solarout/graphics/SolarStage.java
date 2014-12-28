@@ -2,15 +2,10 @@ package com.solarout.graphics;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.solarout.engine.*;
 import com.solarout.graphics.actors.PlanetActor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,8 +30,8 @@ public class SolarStage extends Stage {
         solarSystem = new UniStarSystem(solarRadius, star, 100F);
         solarSystem.addStellarBody(
                 new Planet((float) (6.7F * Math.pow(10, 2)), (float) (5.9 * Math.pow(10, 20))),
-                new MyVector3((float) (1.49F * Math.pow(10, 7)), 0, 0),
-                new Velocity(new MyVector3(0, 1, 0.01F)), star);
+                new DoubleVector3((float) (1.49F * Math.pow(10, 7)), 0, 0),
+                new Velocity(new DoubleVector3(0, 1, 0.01F)), star);
 
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();

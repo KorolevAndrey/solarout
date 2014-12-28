@@ -1,7 +1,5 @@
 package com.solarout.engine;
 
-import com.badlogic.gdx.math.Vector3 ;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -20,14 +18,14 @@ public class Main {
 
         solarSystem.addStellarBody(
                 earth,
-                new MyVector3 (1.496E11, 0, 0),
-                new Velocity(new MyVector3 (0, 3.5E5, 0)), star);
+                new DoubleVector3(1.496E11, 0, 0),
+                new Velocity(new DoubleVector3(0, 3.5E5, 0)), star);
 
         Planet moon = new Planet(3.5E2, 7.34767309E22);
         solarSystem.addStellarBody(
                 moon,
-                new MyVector3 (3.8E8, 0, 0),
-                new Velocity(new MyVector3(0, 0, 1.023E3)), earth);
+                new DoubleVector3(3.8E8, 0, 0),
+                new Velocity(new DoubleVector3(0, 0, 1.023E3)), earth);
 
 //        Star star = new Star((double) (6.955F * Math.pow(10, 4)), (double) (1.98855F * Math.pow(10, 26)));
 //        double solarRadius = (double) (2 * (Math.pow(10, 8)));

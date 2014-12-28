@@ -8,16 +8,15 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.graphics.g3d.*;
-import com.solarout.engine.MyVector3;
+import com.solarout.engine.DoubleVector3;
 
 /**
  * Created by CyberJoe on 12/19/2014.
  */
 public class Planet3D {
 
-    private MyVector3 position;
+    private DoubleVector3 position;
 
     private float radius;
 
@@ -50,10 +49,10 @@ public class Planet3D {
 
     public void setPosition(float x, float y, float z) {
         instance.transform.setToTranslation(x, y, z);
-        position = new MyVector3 (x, y, z);
+        position = new DoubleVector3(x, y, z);
     }
 
-    public MyVector3  getPosition() {
+    public DoubleVector3 getPosition() {
         return position;
     }
 }

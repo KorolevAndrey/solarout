@@ -3,14 +3,14 @@ package com.solarout.graphics.actors;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.solarout.engine.MyVector3;
+import com.solarout.engine.DoubleVector3;
 
 /**
  * Created by azakhary on 12/22/2014.
  */
 public class Trajectory {
 
-    private MyVector3[] trajectoryPoints;
+    private DoubleVector3[] trajectoryPoints;
     private int tpIndex = 0;
     private Planet3D followingBody;
 
@@ -24,7 +24,7 @@ public class Trajectory {
     }
 
     public void setBody(Planet3D body, Color color) {
-        trajectoryPoints = new MyVector3 [200];
+        trajectoryPoints = new DoubleVector3[1000];
         followingBody = body;
         tpIndex = 0;
         this.color = color;
@@ -38,9 +38,9 @@ public class Trajectory {
                 for(int i = 0; i < trajectoryPoints.length-1; i++) {
                     trajectoryPoints[i] = trajectoryPoints[i+1];
                 }
-                trajectoryPoints[tpIndex] = new MyVector3(followingBody.getPosition());
+                trajectoryPoints[tpIndex] = new DoubleVector3(followingBody.getPosition());
             } else {
-                trajectoryPoints[tpIndex++] = new MyVector3(followingBody.getPosition());
+                trajectoryPoints[tpIndex++] = new DoubleVector3(followingBody.getPosition());
             }
 
         }

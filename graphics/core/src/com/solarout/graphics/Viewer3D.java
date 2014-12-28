@@ -1,28 +1,18 @@
 package com.solarout.graphics;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector;
-import com.badlogic.gdx.math.Vector3;
 import com.solarout.engine.*;
 import com.solarout.graphics.actors.Planet3D;
-import com.solarout.graphics.actors.PlanetActor;
 import com.solarout.graphics.actors.Trajectory;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -46,7 +36,7 @@ public class Viewer3D {
 
     private UniStarSystem solarSystem;
 
-    private float meterPerPixel = 10000000000f;
+    private float meterPerPixel = 100000000f;
     private float mpp2 = 1;
 
     public ArrayList<Trajectory> trajectories = new ArrayList<Trajectory>();
@@ -121,22 +111,21 @@ public class Viewer3D {
 //                new Velocity(new MyVector3 (0, 0, 0.0666F), (float) (0.4F * Math.pow(10, 2))), earth);
 
 
-        Star star = new Star(6.958E8, 1.989E30);
-//        Star star = new Star(6.371E6, 5.972E24);
-        solarSystem = new UniStarSystem(1.496E12, star, 8F);
+//        Star star = new Star(6.958E8, 1.989E30);
+        Star star = new Star(6.371E6, 5.972E24);
+        solarSystem = new UniStarSystem(1.496E7, star, 2F);
 
-        Planet earth = new Planet(6.371E6, 5.972E24, "earth");
-
-        solarSystem.addStellarBody(
-                earth,
-                new MyVector3 (1.496E11, 0, 0),
-                new Velocity(new MyVector3 (0, 3E4, 0)), star);
+//        Planet earth = new Planet(6.371E6, 5.972E24, "earth");
+//        solarSystem.addStellarBody(
+//                earth,
+//                new DoubleVector3(1.496E11, 0, 0),
+//                new Velocity(new DoubleVector3(0, 3E4, 0)), star);
 
         Planet moon = new Planet(3.5E2, 7.34767309E22, "moon");
         solarSystem.addStellarBody(
                 moon,
-                new MyVector3 (3.8E8, 0, 0),
-                new Velocity(new MyVector3(0, 0, 1.0233E3)), earth);
+                new DoubleVector3 (3.8E8, 0, 0),
+                new Velocity(new DoubleVector3(0, 0, 1.0233E3)), star);
 
         Iterator it = solarSystem.getStellarBodies().entrySet().iterator();
         while (it.hasNext()) {
@@ -157,7 +146,7 @@ public class Viewer3D {
         planets.put("star", starPlanet);
         setCoordinateToObject(star, starPlanet);
 
-        pointCameraTo(earth);
+        pointCameraTo(star);
     }
 
     private void setTrajectryFollower(Planet3D body, Color color) {
@@ -167,14 +156,14 @@ public class Viewer3D {
     }
 
     private void setCoordinateToObject(SphericStellarBody body, Planet3D planet) {
-        MyVector3  vec = new MyVector3 (body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
+        DoubleVector3 vec = new DoubleVector3(body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
 
 //        System.out.println(vec.y);
         planet.setPosition((float) vec.x, (float) vec.y, (float) vec.z);
     }
 
     private void pointCameraTo(SphericStellarBody body) {
-        MyVector3  vec = new MyVector3 (body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
+        DoubleVector3 vec = new DoubleVector3(body.getPosition().x / meterPerPixel/mpp2, body.getPosition().y / meterPerPixel/mpp2, body.getPosition().z / meterPerPixel/mpp2);
         cam.position.set((float) vec.x, (float) vec.y+10, (float) vec.z+10);
         cam.lookAt((float) vec.x, (float) vec.y, (float) vec.z);
         cam.update();

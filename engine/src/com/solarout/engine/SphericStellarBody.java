@@ -1,7 +1,5 @@
 package com.solarout.engine;
 
-import com.badlogic.gdx.math.Vector3 ;
-
 /**
  * Created by aram on 12/15/2014.
  */
@@ -18,7 +16,7 @@ abstract public class SphericStellarBody extends MaterialPoint {
      * @param position initial position of Object
      * @param velocity velocity of Object
      */
-    public SphericStellarBody(MyVector3  position, double radius, double mass, Velocity velocity) {
+    public SphericStellarBody(DoubleVector3 position, double radius, double mass, Velocity velocity) {
         super(position);
 
         this.radius = radius;
@@ -26,7 +24,7 @@ abstract public class SphericStellarBody extends MaterialPoint {
         this.velocity = velocity;
     }
 
-    public SphericStellarBody(MyVector3  position, double radius, double mass, Velocity velocity, String name) {
+    public SphericStellarBody(DoubleVector3 position, double radius, double mass, Velocity velocity, String name) {
         super(position, name);
 
         this.radius = radius;
