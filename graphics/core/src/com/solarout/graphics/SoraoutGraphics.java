@@ -2,6 +2,7 @@ package com.solarout.graphics;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 
 import javax.swing.text.View;
@@ -12,10 +13,18 @@ public class SoraoutGraphics extends ApplicationAdapter {
 
 	private UIStage uiStage;
 
+	private InputMultiplexer multiplexer;
+
 	@Override
 	public void create () {
 		uiStage = new UIStage();
 		viewer = new Viewer3D(uiStage);
+
+		multiplexer = new InputMultiplexer();
+
+		multiplexer.addProcessor(uiStage);
+		multiplexer.addProcessor(viewer.camController);
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override

@@ -60,7 +60,6 @@ public class Viewer3D {
         cam.update();
 
         camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(camController);
 
         colorMap.add(0, Color.BLUE);
         colorMap.add(1, Color.CYAN);
@@ -154,6 +153,8 @@ public class Viewer3D {
         setCoordinateToObject(star, starPlanet);
 
         pointCameraTo(star);
+
+        uiStage.setSystem(solarSystem);
     }
 
     private void setTrajectryFollower(Planet3D body, Color color) {
@@ -217,7 +218,7 @@ public class Viewer3D {
                 e.printStackTrace();
             }
 
-            uiStage.update(solarSystem);
+            uiStage.update();
 
             for(int i = 0; i < trajectories.size(); i++) {
                 trajectories.get(i).update();
