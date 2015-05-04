@@ -113,11 +113,15 @@ public class UniStarSystem {
             String bodyName = (String) pairs.getKey();
             SphericStellarBody stellarBody = (SphericStellarBody) pairs.getValue();
             try {
-                bodiesGravityAcceleration.put(bodyName, this.calculateGravityAccelerationForStellarBody(stellarBody));
+                Acceleration bodyAcceleration = this.calculateGravityAccelerationForStellarBody(stellarBody);
+                stellarBody.setAcceleration(bodyAcceleration);
+                bodiesGravityAcceleration.put(bodyName, bodyAcceleration);
             } catch (Exception e) {
                 System.out.print("Error calculating gravity acceleration");
             }
         }
+
+        //@TODO change this to read from bodys acceleration property not hahsmap
 
         //apply all changes
         it = bodiesGravityAcceleration.entrySet().iterator();
@@ -140,8 +144,13 @@ public class UniStarSystem {
         if (affectedStellarBody == null) {
             throw new Exception("Invalid stellar body name");
         }
+
+
         Iterator it = this.getStellarBodies().entrySet().iterator();
         DoubleVector3 gravityAccelerationVector = Acceleration.calculateGravityAcceleration(star, affectedStellarBody);
+        double maxAccelerating = gravityAccelerationVector.len();
+        affectedStellarBody.setParent(star);
+        DoubleVector3 tmpAcceleration;
 
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
@@ -150,7 +159,14 @@ public class UniStarSystem {
                 continue;
             }
             SphericStellarBody affectingStellarBody = (SphericStellarBody) pairs.getValue();
-            gravityAccelerationVector.add(Acceleration.calculateGravityAcceleration(affectingStellarBody, affectedStellarBody));
+            tmpAcceleration = Acceleration.calculateGravityAcceleration(affectingStellarBody, affectedStellarBody);
+
+            if(tmpAcceleration.cpy().sub(affectingStellarBody.getAcceleration().getVector()).len() > maxAccelerating) {
+                maxAccelerating = tmpAcceleration.len();
+                affectedStellarBody.setParent(affectingStellarBody);
+            }
+
+            gravityAccelerationVector.add(tmpAcceleration);
         }
 
         Acceleration gravityAcceleration = new Acceleration(gravityAccelerationVector);

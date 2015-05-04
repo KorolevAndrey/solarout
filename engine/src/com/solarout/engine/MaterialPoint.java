@@ -13,7 +13,7 @@ abstract public class MaterialPoint {
     private Velocity velocity;
 
     protected MaterialPoint parent;
-
+    private Acceleration acceleration;
     protected String name;
 
     /**
@@ -21,21 +21,19 @@ abstract public class MaterialPoint {
      */
 
     public MaterialPoint(DoubleVector3 position, Velocity velocity, MaterialPoint parent) {
-        this.position = position;
-        this.velocity = velocity;
-        this.parent = parent;
-        this.assignRandomName();
+        this(position, velocity, parent, MaterialPoint.getRandomName());
     }
 
-    public void assignRandomName() {
+    public static String getRandomName() {
         SecureRandom random = new SecureRandom();
-        this.name = "Object-" + new BigInteger(30, random).toString(32);
+        return "Object-" + new BigInteger(30, random).toString(32);
     }
 
     public MaterialPoint(DoubleVector3 position, Velocity velocity, MaterialPoint parent, String name) {
         this.position = position;
         this.velocity = velocity;
         this.parent = parent;
+        this.acceleration = new Acceleration(new DoubleVector3(0, 0, 0));
         this.name = name;
     }
 
@@ -91,6 +89,14 @@ abstract public class MaterialPoint {
         }
 
         return 0;
+    }
+
+    public Acceleration getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Acceleration acceleration) {
+        this.acceleration = acceleration;
     }
 
     public MaterialPoint getParent() {

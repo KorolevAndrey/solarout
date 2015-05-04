@@ -12,7 +12,7 @@ public class Velocity {
     }
 
     public DoubleVector3 getVector() {
-        return vector;
+        return this.vector;
     }
 
     public void setVector(DoubleVector3 vector) {
